@@ -5,5 +5,40 @@ Django To-Do List
 {% endblock %}
 
 {% block content %}
-<h1>Django To-Do List Home Page</h1>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% elif message.tags == 'warning' %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {% else %}
+                <div class="alert alert-primary alert-dismissible fade show" role="alert"></div>
+            {% endif %}
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if list %}
+    <table class="table table-bordered">
+        {% for item in list %}
+            <tr 
+            {% if item.is_completed %}
+                class="table-secondary"
+            {% endif %}
+            > 
+                <td
+                {% if item.is_completed %}
+                    class="striker"
+                {% endif %}
+                >{{ item.item }}</td>
+                <td class="txt-center">{{ item.is_completed }}</td> 
+                <td class="txt-center">
+                    <a href="{% url 'delete' item.id %}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
 {% endblock %}
