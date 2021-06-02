@@ -33,9 +33,15 @@ Django To-Do List
                     class="striker"
                 {% endif %}
                 >{{ item.item }}</td>
-                <td class="txt-center">{{ item.is_completed }}</td> 
-                <td class="txt-center">
-                    <a href="{% url 'delete' item.id %}">Delete</a>
+                <td class="txt-center check-box">
+                    {% if item.is_completed %}
+                        <a href="{% url 'action' item.id %}">&#10003;</a>
+                    {% else %}
+                        <a href="{% url 'action' item.id %}">&#9744;</a>
+                    {% endif %}
+                </td> 
+                <td class="txt-center delete-link">
+                    <a href="{% url 'delete' item.id %}">&#9746;</a>
                 </td>
             </tr>
         {% endfor %}

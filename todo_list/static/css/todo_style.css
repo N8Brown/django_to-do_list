@@ -5,3 +5,13 @@
 .striker {
     text-decoration: line-through;
 }
+
+.delete-link > a {
+    text-decoration: none;
+    color: red;
+}
+
+.check-box > a {
+    text-decoration: none;
+    color: green;
+}
