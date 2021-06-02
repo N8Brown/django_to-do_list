@@ -32,7 +32,9 @@ Django To-Do List
                 {% if item.is_completed %}
                     class="striker"
                 {% endif %}
-                >{{ item.item }}</td>
+                >
+                    <a href="{% url 'edit' item.id %}">{{ item.item }}</a>
+                </td>
                 <td class="txt-center check-box">
                     {% if item.is_completed %}
                         <a href="{% url 'action' item.id %}">&#10003;</a>

@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
-# from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from .models import List
 from .forms import ListForm
 
@@ -26,6 +26,26 @@ def home(request):
             'list': list,
         }
         return render(request, 'home.html', context)
+
+
+def edit_item(request, list_id):
+    if request.method == 'POST':
+        item = List.objects.get(pk=list_id)
+        form = ListForm(request.POST or None, instance=item)
+        if form.is_valid():
+            form.save()
+        else:
+            messages.warning(request, ('An error has occurred. Please try again.'))
+        
+        messages.success(request, ('Item has been successfully edited.'))
+        return redirect('home')
+
+    else:
+        item = List.objects.get(pk=list_id)
+        context = {
+            'item': item
+        }
+        return render(request, 'edit.html', context)
 
 
 def about(request):
